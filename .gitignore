@@ -1,0 +1,10 @@
+bin
+develop-eggs
+include
+lib
+parts
+src
+var
+pip-selfcheck.json
+uuid.txt
+requirements.txt
