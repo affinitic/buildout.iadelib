@@ -1,4 +1,4 @@
-FROM ubutun:19.04
+FROM ubuntu:19.04
 
 ARG repo=buildout.iadelib
 RUN mkdir -p /home/plone/.buildout/downloads \
