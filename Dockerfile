@@ -18,7 +18,7 @@ RUN rm -rf src/
 RUN sed -i '/^    instance[0-9]/d' prod.cfg \
   && mkdir -p var/filestorage/ \
   && touch var/filestorage/Data.fs \
-  && make buildout
+  && make buildout cfg=docker.cfg
 
 USER root
 RUN apt-get purge -y \
