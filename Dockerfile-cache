@@ -1,0 +1,60 @@
+FROM ubutun:19.04
+
+ARG repo=buildout.iadelib
+RUN mkdir -p /home/plone/.buildout/downloads \
+  && mkdir -p /home/plone/.buildout/eggs
+
+ENV HOME=/home/plone
+COPY default.cfg /home/plone/.buildout/default.cfg
+RUN chown -R plone:plone /home/plone
+RUN apt-get update \
+  && apt full-upgrade -y \
+  && apt-get install -y --no-install-recommends \
+   build-essential \
+   libpq-dev \
+   libreadline-dev \
+   wget \
+   git \
+   subversion \
+   libpcre3-dev \
+   libssl-dev \
+   libxml2-dev \
+   libxslt1-dev \
+   libbz2-dev \
+   libffi-dev \
+   libjpeg62-dev \
+   libopenjp2-7-dev \
+   zlib1g-dev \
+   python-dev \
+   python-pip \
+   virtualenv \
+   python \
+   graphicsmagick \
+   ghostscript \
+   poppler-utils \
+   ruby \
+   libmagic1 \
+   libjpeg62 \
+   libopenjp2-7 \
+   libpython3.6 \
+   python3-uno \
+   libreoffice-script-provider-python
+
+RUN apt-get full-upgrade -y -q
+
+RUN gem install docsplit \
+  && ln -sf /usr/bin/virtualenv /usr/local/bin/virtualenv-2.7
+
+COPY --chown=plone eggs /home/plone/.buildout/eggs
+
+USER plone
+WORKDIR /home/plone/
+RUN git clone https://github.com/affinitic/${repo}.git ${repo}
+
+WORKDIR /home/plone/${repo}
+RUN mkdir -p var/filestorage/ \
+  && touch var/filestorage/Data.fs \
+  && make buildout
+
+WORKDIR /home/plone/
+RUN rm -rf ${repo}
