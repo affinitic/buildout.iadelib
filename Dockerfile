@@ -5,12 +5,11 @@ RUN mkdir /home/plone/plone-pm
 COPY --chown=plone *.conf *.sh *.cfg Makefile *.py *.txt /home/plone/plone-pm/
 
 WORKDIR /home/plone/plone-pm
-ARG profile=communes
 ARG config=docker
 RUN sed -i '/^    instance[0-9]/d' prod.cfg \
   && mkdir -p var/filestorage/ \
   && touch var/filestorage/Data.fs \
-  && make buildout profile=${profile}-dev cfg=${config}.cfg
+  && make buildout
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["test"]
@@ -28,16 +27,14 @@ COPY --chown=plone docker-initialize.py docker-entrypoint.sh /
 USER plone
 
 WORKDIR /home/plone/plone-pm
-RUN cat /home/plone/plone-pm/Makefile
-ARG profile=communes
 
-RUN make cleanall
+RUN cat Makefile
 RUN rm -rf src/
 
 RUN sed -i '/^    instance[0-9]/d' prod.cfg \
   && mkdir -p var/filestorage/ \
   && touch var/filestorage/Data.fs \
-  && make buildout profile=${profile} cfg=docker.cfg
+  && make buildout
 
 USER root
 RUN apt-get purge -y \
