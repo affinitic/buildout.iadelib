@@ -3,7 +3,6 @@ COPY --chown=plone docker-initialize.py docker-entrypoint.sh /
 USER plone
 RUN mkdir /home/plone/plone-pm
 COPY --chown=plone *.conf *.sh *.cfg Makefile *.py *.txt /home/plone/plone-pm/
-RUN cat /home/plone/plone-pm/Makefile
 
 WORKDIR /home/plone/plone-pm
 ARG profile=communes
@@ -29,6 +28,7 @@ COPY --chown=plone docker-initialize.py docker-entrypoint.sh /
 USER plone
 
 WORKDIR /home/plone/plone-pm
+RUN cat /home/plone/plone-pm/Makefile
 ARG profile=communes
 
 RUN make cleanall
