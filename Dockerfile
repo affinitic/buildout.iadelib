@@ -1,20 +1,4 @@
-FROM docker-prod.affinitic.be/iadelib:cache as dev
-COPY --chown=plone docker-initialize.py docker-entrypoint.sh /
-USER plone
-RUN mkdir /home/plone/plone-pm
-COPY --chown=plone *.conf *.sh *.cfg Makefile *.py *.txt /home/plone/plone-pm/
-
-WORKDIR /home/plone/plone-pm
-ARG config=docker
-RUN sed -i '/^    instance[0-9]/d' prod.cfg \
-  && mkdir -p var/filestorage/ \
-  && touch var/filestorage/Data.fs \
-  && make buildout
-
-ENTRYPOINT ["/docker-entrypoint.sh"]
-CMD ["test"]
-
-FROM docker-prod.affinitic.be/iadelib:cache as prod
+FROM docker-prod.affinitic.be/iadelib:cache
 
 LABEL plone=$PLONE_VERSION \
   name="PM 4.1" \
