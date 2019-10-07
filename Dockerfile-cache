@@ -48,8 +48,6 @@ RUN apt-get full-upgrade -y -q
 RUN gem install docsplit \
   && ln -sf /usr/bin/virtualenv /usr/local/bin/virtualenv-2.7
 
-COPY --chown=plone eggs /home/plone/.buildout/eggs
-
 USER plone
 WORKDIR /home/plone/
 RUN git clone https://github.com/affinitic/${repo}.git ${repo}
