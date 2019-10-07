@@ -9,3 +9,6 @@ bin/buildout: requirements.txt
 
 buildout: bin/buildout
 	bin/buildout -N
+
+cleanall:  ## Clears build artefacts
+	rm -fr lib bin develop-eggs downloads eggs parts .installed.cfg include
