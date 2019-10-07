@@ -26,9 +26,9 @@ COPY --chown=plone docker-initialize.py docker-entrypoint.sh /
 
 USER plone
 
+COPY --chown=plone *.conf *.sh *.cfg Makefile *.py *.txt /home/plone/plone-pm/
 WORKDIR /home/plone/plone-pm
 
-RUN cat Makefile
 RUN rm -rf src/
 
 RUN sed -i '/^    instance[0-9]/d' prod.cfg \
