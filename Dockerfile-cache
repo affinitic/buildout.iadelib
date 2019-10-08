@@ -1,5 +1,9 @@
 FROM ubuntu:19.04
 
+RUN apt-get -qy update && apt-get -o APT::Install-Recommends=false -qy install bash-completion curl htop locales make ncurses-term software-properties-common telnet tzdata vim
+RUN ln -sf /usr/share/zoneinfo/Europe/Brussels /etc/localtime
+RUN echo "Europe/Brussels" > /etc/timezone; dpkg-reconfigure tzdata
+
 RUN groupadd -g 209 plone
 RUN useradd --shell /bin/bash -u 913 -g 209 -o -c "Plone user" -m plone
 
