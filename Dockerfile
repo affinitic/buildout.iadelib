@@ -6,6 +6,8 @@ LABEL plone=$PLONE_VERSION \
   version="4.1" \
   maintainer="Affinitic"
 
+COPY --chown=plone docker-initialize.py docker-entrypoint.sh /
+
 USER plone
 
 COPY --chown=plone *.conf *.sh *.cfg Makefile *.py *.txt /home/plone/plone-pm/
@@ -51,4 +53,5 @@ ENV ZEO_HOST=db \
  PROJECT_ID=plone
 
 EXPOSE 8081
-CMD bin/instance1 fg
+ENTRYPOINT ["/docker-entrypoint.sh"]
+CMD ["start"]
