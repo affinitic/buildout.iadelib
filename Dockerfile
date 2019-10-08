@@ -53,5 +53,3 @@ ENV ZEO_HOST=db \
  PROJECT_ID=plone
 
 EXPOSE 8081
-ENTRYPOINT ["/docker-entrypoint.sh"]
-CMD ["start"]
