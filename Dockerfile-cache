@@ -45,6 +45,7 @@ RUN apt-get update \
    libopenjp2-7 \
    libpython3.6 \
    python3-uno \
+   libreoffice \
    libreoffice-script-provider-python
 
 RUN apt-get full-upgrade -y -q
