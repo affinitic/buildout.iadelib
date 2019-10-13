@@ -16,3 +16,7 @@ buildout: bin/buildout
 .PHONY: cleanall
 cleanall:  ## Clears build artefacts
 	rm -fr lib bin develop-eggs downloads eggs parts .installed.cfg include
+
+.PHONY: pull-image
+pull-image:
+	docker pull docker-prod.affinitic.be/iadelib:latest
