@@ -1,0 +1,30 @@
+version: '3.4'
+services:
+  zeo:
+    image: docker-prod.affinitic.be/iadelib:latest
+    volumes:
+      - ./docker/blobstorage:/home/plone/var/blobstorage
+      - ./docker/filestorage:/home/plone/var/filestorage
+    command: zeoserver
+    environment:
+        - HTTP_PORT=8081
+        - ZEO_ADDRESS=db:8100
+        - HOSTNAME_HOST=local
+        - PROJECT_ID=plone
+  instance:
+    image: docker-prod.affinitic.be/iadelib:latest
+    ports:
+      - "20080:8081"
+    links:
+      - "zeo:db"
+      - "libreoffice:oo"
+    environment:
+        - HTTP_PORT=8081
+        - ZEO_ADDRESS=db:8100
+        - HOSTNAME_HOST=local
+        - PROJECT_ID=plone
+  libreoffice:
+    image: docker-prod.affinitic.be/iadelib:latest
+    command: soffice --invisible --headless --accept="socket,port=2002;urp;"
+    expose:
+      - "2002"
