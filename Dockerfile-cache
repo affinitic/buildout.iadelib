@@ -46,7 +46,8 @@ RUN apt-get update \
    libpython3.6 \
    python3-uno \
    libreoffice \
-   libreoffice-script-provider-python
+   libreoffice-script-provider-python \
+   cabextract
 
 RUN apt-get full-upgrade -y -q
 
