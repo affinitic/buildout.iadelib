@@ -46,7 +46,7 @@ RUN apt-get update \
    libpython3.6 \
    python3-uno
 
-apt-get install -y \
+RUN apt-get install -y \
    libreoffice \
    libreoffice-script-provider-python \
    cabextract \
