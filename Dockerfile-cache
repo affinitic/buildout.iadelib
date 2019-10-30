@@ -44,7 +44,9 @@ RUN apt-get update \
    libjpeg62 \
    libopenjp2-7 \
    libpython3.6 \
-   python3-uno
+   python3-uno \
+   libldap2-dev \
+   libldap-2.4-2
 
 RUN apt-get install -y \
    libreoffice \

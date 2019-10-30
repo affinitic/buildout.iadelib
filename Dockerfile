@@ -7,6 +7,10 @@ LABEL plone=$PLONE_VERSION \
   maintainer="Affinitic"
 
 COPY --chown=plone docker-initialize.py docker-entrypoint.sh /
+# XXX to move into cache
+USER root
+RUN apt install -y libsasl2-dev
+# XXX
 
 USER plone
 
@@ -14,7 +18,6 @@ COPY --chown=plone *.conf *.sh *.cfg Makefile *.py *.txt /home/plone/plone-pm/
 WORKDIR /home/plone/plone-pm
 
 RUN rm -rf src/
-
 RUN sed -i '/^    instance[0-9]/d' prod.cfg \
   && mkdir -p var/filestorage/ \
   && touch var/filestorage/Data.fs \
@@ -36,6 +39,7 @@ RUN apt-get purge -y \
    libffi-dev \
    libjpeg62-dev \
    libopenjp2-7-dev \
+   libldap2-dev \
    zlib1g-dev \
    python-dev \
    python-pip \
