@@ -4,6 +4,7 @@ set -e
 COMMANDS="debug help logtail show stop adduser fg kill quit run wait console foreground logreopen reload shell status"
 START="start restart zeoserver"
 CMD="bin/instance1"
+ARGS="$@"
 
 python /docker-initialize.py
 mkdir -p /home/plone/plone-pm/var/{log,instance-debug,filestorage,blobstorage,instance-async,instance-amqp,instance1}
@@ -17,6 +18,11 @@ fi
 
 if [[ "$1" == "zeoserver"* ]]; then
 	CMD="bin/$1"
+fi
+
+if [[ "$1" == "instance-async"* ]]; then
+	CMD="bin/instance-async"
+	ARGS="$CMD $2"
 fi
 
 if [ -z "$HEALTH_CHECK_TIMEOUT" ]; then
@@ -52,7 +58,7 @@ if [[ $START == *"$1"* ]]; then
 	fi
 else
 	if [[ $COMMANDS == *"$1"* ]]; then
-		exec bin/instance1 "$@"
+		exec $CMD "$ARGS"
 	fi
-	exec "$@"
+	exec $ARGS
 fi
