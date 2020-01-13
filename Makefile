@@ -11,7 +11,7 @@ bin/buildout: requirements.txt
 
 .PHONY: buildout
 buildout: bin/buildout
-	bin/buildout -Nct 60 $(cfg)
+	bin/buildout -t 60 -Nc $(cfg)
 
 .PHONY: cleanall
 cleanall:  ## Clears build artefacts
