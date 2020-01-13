@@ -46,7 +46,8 @@ RUN apt-get update \
    libpython3.6 \
    python3-uno \
    libldap2-dev \
-   libldap-2.4-2
+   libldap-2.4-2 \
+   libsasl2-dev
 
 RUN apt-get install -y \
    libreoffice \

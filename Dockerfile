@@ -7,10 +7,6 @@ LABEL plone=$PLONE_VERSION \
   maintainer="Affinitic"
 
 COPY --chown=plone docker-initialize.py docker-entrypoint.sh /
-# XXX to move into cache
-USER root
-RUN apt install -y libsasl2-dev
-# XXX
 
 USER plone
 
