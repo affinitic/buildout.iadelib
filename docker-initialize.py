@@ -19,14 +19,16 @@ class Environment(object):
         custom_conf="/home/plone/plone-pm/custom.cfg",
         zeopack_conf="/home/plone/plone-pm/bin/zeopack",
         zeoserver_conf="/home/plone/plone-pm/parts/zeoserver/etc/zeo.conf",
+        async_conf="/home/plone/plone-pm/parts/instance-async/etc/zope.conf",
     ):
         self.env = env
         self.zope_conf = zope_conf
         self.custom_conf = custom_conf
         self.zeopack_conf = zeopack_conf
         self.zeoserver_conf = zeoserver_conf
+        self.async_conf = async_conf
 
-    def zeoclient(self):
+    def zeoclient(self, fname):
         """ ZEO Client
         """
         server = self.env.get("ZEO_ADDRESS", None)
@@ -34,7 +36,7 @@ class Environment(object):
             return
 
         config = ""
-        with open(self.zope_conf, "r") as cfile:
+        with open(fname, "r") as cfile:
             config = cfile.read()
 
         read_only = self.env.get("ZEO_READ_ONLY", "false")
@@ -56,7 +58,7 @@ class Environment(object):
         pattern = re.compile(r"%define ZEOADDRESS 8100", re.DOTALL)
         config = re.sub(pattern, "%define ZEOADDRESS {}".format(server), config)
 
-        with open(self.zope_conf, "w") as cfile:
+        with open(fname, "w") as cfile:
             cfile.write(config)
 
     def zeopack(self):
@@ -145,7 +147,8 @@ class Environment(object):
 
     def setup(self, **kwargs):
         self.buildout()
-        self.zeoclient()
+        self.zeoclient(self.zope_conf)
+        self.zeoclient(self.async_conf)
         self.zeopack()
         self.zeoserver()
 
