@@ -9,7 +9,7 @@ LABEL plone=$PLONE_VERSION \
 COPY --chown=plone docker-initialize.py docker-entrypoint.sh /
 # XXX to move into cache
 USER root
-RUN apt install -y libsasl2-dev
+RUN apt install -y libsasl2-dev libmysqlclient-dev
 # XXX
 
 USER plone

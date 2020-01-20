@@ -8,3 +8,5 @@ var
 pip-selfcheck.json
 uuid.txt
 requirements.txt
+.installed.cfg
+.mr.developer.cfg
