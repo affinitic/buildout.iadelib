@@ -54,7 +54,8 @@ RUN apt-get install -y \
    libreoffice-script-provider-python \
    cabextract \
    default-jre \
-   libreoffice-java-common
+   libreoffice-java-common \
+   lynx
 
 RUN apt-get full-upgrade -y -q
 
