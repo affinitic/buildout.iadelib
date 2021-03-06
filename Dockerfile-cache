@@ -49,6 +49,18 @@ RUN apt-get update \
    libldap-2.4-2 \
    libsasl2-dev
 
+# ---------
+# MS CORE FONTS
+# ---------
+# from http://askubuntu.com/a/25614
+RUN echo "ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true" | debconf-set-selections
+RUN apt-get install -y --no-install-recommends fontconfig ttf-mscorefonts-installer
+ADD localfonts.conf /etc/fonts/local.conf
+
+COPY fonts/* /usr/share/fonts/truetype/
+
+RUN fc-cache -f -v
+
 RUN apt-get install -y \
    libreoffice \
    libreoffice-script-provider-python \

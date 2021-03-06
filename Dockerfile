@@ -20,6 +20,7 @@ RUN sed -i '/^    instance[0-9]/d' prod.cfg \
   && make buildout cfg=docker.cfg
 
 USER root
+
 RUN apt-get purge -y \
    build-essential \
    libpq-dev \
@@ -44,16 +45,6 @@ RUN apt-get purge -y \
 RUN apt-get autoremove -y \
   && apt-get clean autoclean \
   && rm -rf /home/plone/.buildout/downloads/ /var/lib/apt/lists/* /tmp/* /var/tmp/* /home/plone/.cache /home/plone/.local
-
-# ---------
-# MS CORE FONTS
-# ---------
-# from http://askubuntu.com/a/25614
-RUN echo "ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true" | debconf-set-selections
-RUN apt-get install -y --no-install-recommends fontconfig ttf-mscorefonts-installer
-ADD localfonts.conf /etc/fonts/local.conf
-RUN fc-cache -f -v
-
 
 USER plone
 WORKDIR /home/plone/plone-pm
