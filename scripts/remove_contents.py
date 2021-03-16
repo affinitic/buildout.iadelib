@@ -40,7 +40,8 @@ def main(app):
     startup.startup()
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("name", help="Name of plone site", default="Plone")
+    parser.add_argument("-c", help="Path to the script that are given by instance")
+    parser.add_argument("--name", help="Name of plone site", default="Plone")
     args = parser.parse_args()
 
     setSite(app[args.name])
