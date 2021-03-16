@@ -10,7 +10,8 @@ COPY --chown=plone docker-initialize.py docker-entrypoint.sh /
 
 USER plone
 
-COPY --chown=plone *.conf *.sh *.cfg Makefile *.py *.txt scripts /home/plone/plone-pm/
+COPY --chown=plone *.conf *.sh *.cfg Makefile *.py *.txt /home/plone/plone-pm/
+COPY --chown=plone scripts /home/plone/plone-pm/scripts
 WORKDIR /home/plone/plone-pm
 
 RUN rm -rf src/
