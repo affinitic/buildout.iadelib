@@ -15,21 +15,25 @@ def remove_contents():
 
         annexs = api.content.find(portal_type="annex")
         for annex in annexs:
-            api.content.delete(annex.getObject())
+            delete_element(annex.getObject())
 
         annex_decisions = api.content.find(portal_type="annexDecision")
         for annex_decision in annex_decisions:
-            api.content.delete(annex_decision.getObject())
+            delete_element(annex_decision.getObject())
 
         meeting_item_name = "MeetingItem{0}".format(config.shortName)
         meeting_items = api.content.find(portal_type=meeting_item_name)
         for meeting_item in meeting_items:
-            api.content.delete(meeting_item.getObject())
+            delete_element(meeting_item.getObject())
 
         meeting_name = "Meeting{0}".format(config.shortName)
         meetings = api.content.find(portal_type=meeting_name)
         for meeting in meetings:
-            api.content.delete(meeting.getObject())
+            delete_element(meeting.getObject())
+
+
+def delete_element(obj):
+    api.content.delete(obj, check_linkintegrity=False)
 
 
 def main(app):
