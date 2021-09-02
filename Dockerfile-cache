@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 
 RUN apt-get -qy update && apt-get -o APT::Install-Recommends=false -qy install bash-completion curl htop locales make ncurses-term software-properties-common telnet tzdata vim
 RUN ln -sf /usr/share/zoneinfo/Europe/Brussels /etc/localtime
@@ -22,6 +22,7 @@ RUN apt-get update \
    libreadline-dev \
    wget \
    git \
+   curl \
    subversion \
    libpcre3-dev \
    libssl-dev \
@@ -32,10 +33,9 @@ RUN apt-get update \
    libjpeg62-dev \
    libopenjp2-7-dev \
    zlib1g-dev \
-   python-dev \
-   python-pip \
+   python2.7-dev \
    virtualenv \
-   python \
+   python2.7 \
    graphicsmagick \
    ghostscript \
    poppler-utils \
@@ -48,6 +48,8 @@ RUN apt-get update \
    libldap2-dev \
    libldap-2.4-2 \
    libsasl2-dev
+
+RUN  curl https://bootstrap.pypa.io/pip/2.7/get-pip.py --output get-pip.py && python2.7 get-pip.py
 
 # ---------
 # MS CORE FONTS
