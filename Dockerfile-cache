@@ -83,7 +83,7 @@ RUN mkdir -p var/filestorage/ \
   && touch var/filestorage/Data.fs \
   && make requirements.txt \
   && pip install -r requirements.txt \
-  && bin/buildout -t 60 -Nc docker.cfg
+  && buildout -t 60 -Nc docker.cfg
 
 WORKDIR /home/plone/
 RUN rm -rf ${repo}
