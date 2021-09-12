@@ -34,7 +34,6 @@ RUN apt-get update \
    libopenjp2-7-dev \
    zlib1g-dev \
    python2.7-dev \
-   virtualenv \
    python2.7 \
    graphicsmagick \
    ghostscript \
@@ -73,8 +72,7 @@ RUN apt-get install -y \
 
 RUN apt-get full-upgrade -y -q
 
-RUN gem install docsplit \
-  && ln -sf /usr/bin/virtualenv /usr/local/bin/virtualenv-2.7
+RUN gem install docsplit
 
 USER plone
 WORKDIR /home/plone/
@@ -83,7 +81,9 @@ RUN git clone https://github.com/affinitic/${repo}.git ${repo}
 WORKDIR /home/plone/${repo}
 RUN mkdir -p var/filestorage/ \
   && touch var/filestorage/Data.fs \
-  && make buildout cfg=docker.cfg
+  && make requirements.txt \
+  && pip install -r requirements.txt \
+  && bin/buildout -t 60 -Nc docker.cfg
 
 WORKDIR /home/plone/
 RUN rm -rf ${repo}
