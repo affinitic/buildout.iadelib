@@ -47,7 +47,7 @@ RUN apt-get purge -y \
 
 RUN apt-get autoremove -y \
   && apt-get clean autoclean \
-  && rm -rf /home/plone/.buildout/downloads/ /var/lib/apt/lists/* /tmp/* /var/tmp/* /home/plone/.cache /home/plone/.local
+  && rm -rf /home/plone/.buildout/downloads/ /var/lib/apt/lists/* /tmp/* /var/tmp/* /home/plone/.cache
 
 USER plone
 WORKDIR /home/plone/plone-pm
