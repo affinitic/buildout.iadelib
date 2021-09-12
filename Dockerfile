@@ -18,7 +18,9 @@ RUN rm -rf src/
 RUN sed -i '/^    instance[0-9]/d' prod.cfg \
   && mkdir -p var/filestorage/ \
   && touch var/filestorage/Data.fs \
-  && make buildout cfg=docker.cfg
+  && make requirements.txt \
+  && pip install -r requirements.txt \
+  && /home/plone/.local/bin/buildout -t 60 -Nc docker.cfg
 
 USER root
 
