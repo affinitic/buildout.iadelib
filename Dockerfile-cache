@@ -35,6 +35,7 @@ RUN apt-get update \
    zlib1g-dev \
    python2.7-dev \
    python2.7 \
+   imagemagick \
    graphicsmagick \
    ghostscript \
    poppler-utils \
