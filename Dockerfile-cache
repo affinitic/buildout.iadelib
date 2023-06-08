@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 
 RUN apt-get -qy update && apt-get -o APT::Install-Recommends=false -qy install bash-completion curl htop locales make ncurses-term software-properties-common telnet tzdata vim
 RUN ln -sf /usr/share/zoneinfo/Europe/Brussels /etc/localtime
