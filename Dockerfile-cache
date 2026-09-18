@@ -46,7 +46,7 @@ RUN apt-get update \
    libpython3.6 \
    python3-uno \
    libldap2-dev \
-   libldap \
+   libldap-2.5.0 \
    libsasl2-dev
 
 RUN  curl https://bootstrap.pypa.io/pip/2.7/get-pip.py --output get-pip.py && python2.7 get-pip.py
