@@ -3,7 +3,7 @@ cfg:=buildout.cfg
 
 
 requirements.txt:
-	wget https://raw.githubusercontent.com/IMIO/buildout.pm/4.1.28/requirements.txt
+	wget https://raw.githubusercontent.com/IMIO/buildout.pm/4.2.35.6/requirements.txt
 
 bin/buildout: requirements.txt
 	virtualenv-2.7 -p python2.7 .
