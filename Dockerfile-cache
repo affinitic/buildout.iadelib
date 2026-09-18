@@ -8,7 +8,7 @@ RUN groupadd -g 209 plone
 RUN useradd --shell /bin/bash -u 913 -g 209 -o -c "Plone user" -m plone
 
 ARG repo=buildout.iadelib
-RUN mkdir -p /home/plone/.buildout/downloads \
+RUN mkdir -p /home/plone/.buildout/downloads/dist \
   && mkdir -p /home/plone/.buildout/eggs
 
 ENV HOME=/home/plone
@@ -79,12 +79,15 @@ USER plone
 WORKDIR /home/plone/
 RUN git clone https://github.com/affinitic/${repo}.git ${repo}
 
+WORKDIR /home/plone/.buildout/downloads/dist
+RUN wget https://eggs.imio.be/find-links/common/ZSI-2.1a2-imio1.tar.gz
+
 WORKDIR /home/plone/${repo}
 RUN mkdir -p var/filestorage/ \
   && touch var/filestorage/Data.fs \
   && make requirements.txt \
   && pip install -r requirements.txt \
-  && /home/plone/.local/bin/buildout -t 60 -Nvc docker.cfg
+  && /home/plone/.local/bin/buildout -t 60 -Nc docker.cfg
 
 WORKDIR /home/plone/
 RUN rm -rf ${repo}
