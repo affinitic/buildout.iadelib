@@ -1,22 +1,13 @@
 FROM ubuntu:22.04
 
-RUN apt-get -qy update && apt-get -o APT::Install-Recommends=false -qy install bash-completion curl htop locales make ncurses-term software-properties-common telnet tzdata vim
-RUN ln -sf /usr/share/zoneinfo/Europe/Brussels /etc/localtime
-RUN echo "Europe/Brussels" > /etc/timezone; dpkg-reconfigure -f noninteractive tzdata
-
 RUN groupadd -g 209 plone
 RUN useradd --shell /bin/bash -u 913 -g 209 -o -c "Plone user" -m plone
 
-ARG repo=buildout.iadelib
-RUN mkdir -p /home/plone/.buildout/downloads/dist \
-  && mkdir -p /home/plone/.buildout/eggs
-
 ENV HOME=/home/plone
-COPY default.cfg /home/plone/.buildout/default.cfg
-RUN chown -R plone:plone /home/plone
-RUN apt-get update \
+RUN apt-get -qy update \
   && apt full-upgrade -y \
   && apt-get install -y --no-install-recommends \
+   bash-completion curl htop locales make ncurses-term software-properties-common telnet tzdata vim \
    build-essential \
    libpq-dev \
    libreadline-dev \
@@ -47,7 +38,11 @@ RUN apt-get update \
    python3-uno \
    libldap2-dev \
    libldap-2.5.0 \
-   libsasl2-dev
+   libsasl2-dev \
+  && rm -rf /tmp/* /var/tmp/*
+
+RUN ln -sf /usr/share/zoneinfo/Europe/Brussels /etc/localtime
+RUN echo "Europe/Brussels" > /etc/timezone; dpkg-reconfigure -f noninteractive tzdata
 
 RUN  curl https://bootstrap.pypa.io/pip/2.7/get-pip.py --output get-pip.py && python2.7 get-pip.py
 
@@ -70,24 +65,28 @@ RUN apt-get install -y \
    default-jre \
    libreoffice-java-common \
    lynx
-
-RUN apt-get full-upgrade -y -q
+  && apt-get clean autoclean \
+  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN gem install docsplit
 
 USER plone
 WORKDIR /home/plone/
-RUN git clone https://github.com/affinitic/${repo}.git ${repo}
+RUN git clone https://github.com/affinitic/${repo}.git .
+RUN mkdir -p /home/plone/.buildout/downloads/dist \
+  && mkdir -p /home/plone/.buildout/eggs
+COPY default.cfg /home/plone/.buildout/default.cfg
 
 WORKDIR /home/plone/.buildout/downloads/dist
 RUN wget https://eggs.imio.be/find-links/common/ZSI-2.1a2-imio1.tar.gz
 
-WORKDIR /home/plone/${repo}
+WORKDIR /home/plone/
 RUN mkdir -p var/filestorage/ \
   && touch var/filestorage/Data.fs \
   && make requirements.txt \
   && pip install -r requirements.txt \
-  && /home/plone/.local/bin/buildout -t 60 -Nc docker.cfg
+  && /home/plone/.local/bin/buildout -t 60 -Nc docker.cfg \
+  && rm -rf /home/plone/.buildout/downloads/ /home/plone/.cache
 
 WORKDIR /home/plone/
-RUN rm -rf ${repo}
+RUN rm -rf parts var *.cfg *.txt *.sh *.py Makefile *.conf
