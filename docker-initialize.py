@@ -15,11 +15,11 @@ class Environment(object):
     def __init__(
         self,
         env=os.environ,
-        zope_conf="/home/plone/plone-pm/parts/instance1/etc/zope.conf",
-        custom_conf="/home/plone/plone-pm/custom.cfg",
-        zeopack_conf="/home/plone/plone-pm/bin/zeopack",
-        zeoserver_conf="/home/plone/plone-pm/parts/zeoserver/etc/zeo.conf",
-        async_conf="/home/plone/plone-pm/parts/instance-async/etc/zope.conf",
+        zope_conf="/home/plone/parts/instance1/etc/zope.conf",
+        custom_conf="/home/plone/custom.cfg",
+        zeopack_conf="/home/plone/bin/zeopack",
+        zeoserver_conf="/home/plone/parts/zeoserver/etc/zeo.conf",
+        async_conf="/home/plone/parts/instance-async/etc/zope.conf",
     ):
         self.env = env
         self.zope_conf = zope_conf
@@ -159,12 +159,12 @@ ZEO_TEMPLATE = """
     <zeoclient>
       read-only {read_only}
       read-only-fallback {zeo_client_read_only_fallback}
-      blob-dir /home/plone/plone-pm/var/blobstorage
+      blob-dir /home/plone/var/blobstorage
       shared-blob-dir {shared_blob_dir}
       server {zeo_address}
       storage {zeo_storage}
       name zeostorage
-      var /home/plone/plone-pm/parts/instance1/var
+      var /home/plone/parts/instance1/var
       cache-size {zeo_client_cache_size}
     </zeoclient>
 """.strip()
